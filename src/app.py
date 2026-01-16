@@ -433,9 +433,9 @@ def main():
         
         /* Reset main container to default comfortable spacing */
         .block-container {
-            padding-top: 3rem;
+            padding-top: 6rem;
             padding-bottom: 3rem;
-            max-width: 100%;
+            max-width: 95%;
         }
         
         /* New Gradient Text Class */
@@ -562,19 +562,6 @@ def main():
         
         .stTabs [data-baseweb="tab"][aria-selected="true"] div {
             font-weight: 700 !important;
-        }
-
-        /* Sidebar Cleanup */
-        [data-testid="stSidebar"] {
-            background-color: #020617;
-            border-right: 1px solid #1E293B;
-        }
-        
-        /* Container spacing */
-        .block-container {
-            padding-top: 2rem;
-            padding-bottom: 3rem;
-            max-width: 1200px;
         }
 
         /* Sidebar Cleanup */
