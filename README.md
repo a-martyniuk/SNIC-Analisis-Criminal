@@ -82,6 +82,22 @@ Consulta el archivo [DEPLOY.md](DEPLOY.md) para ver guías detalladas sobre cóm
 
 ## 📄 Créditos y Datos
 
+## 📄 Créditos y Datos
+
 *   **Fuente de Datos:** [Dirección Nacional de Estadística Criminal - Bases de Datos](https://www.argentina.gob.ar/seguridad/estadisticascriminales/bases-de-datos).
+*   **Dataset Específico:** `snic-departamentos-anual.csv` (Serie histórica de hechos delictuosos desagregada por provincia y departamento).
 *   **Procesamiento Geográfico:** APIs de GeoRef e INDEC (Censo 2022).
 *   **Desarrollado por:** Alexis Martyniuk.
+
+## 🔄 Mantenimiento y Actualización Anual
+
+El proyecto está diseñado para ser **actualizable automáticamente** conforme el Ministerio publique nuevos datos:
+
+1.  **Lógica:** El pipeline (`src/pipeline.py`) descarga siempre la versión más reciente del CSV oficial.
+2.  **Cómo Actualizar:**
+    *   Ejecutar el comando de actualización:
+        ```bash
+        python src/pipeline.py
+        ```
+    *   Esto descargará los nuevos registros, limpiará los datos y regenerará el archivo `snic_analytics.parquet`.
+    *   La aplicación detectará automáticamente los nuevos años disponibles y los agregará al selector de "Año Base".
