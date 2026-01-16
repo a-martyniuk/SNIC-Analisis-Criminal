@@ -298,7 +298,7 @@ def load_geojson():
         st.error(f"Error cargando mapa: {e}")
         return None
 
-# Removed cache for debugging
+@st.cache_data
 def load_data():
     """Loads data from Parquet or CSV fallback."""
     df = None
@@ -310,11 +310,58 @@ def load_data():
             df = pd.read_csv(FALLBACK_DATA_PATH)
             return df
         else:
-            st.error(f"File not found at {DATA_PATH} or {FALLBACK_DATA_PATH}")
             return None
     except Exception as e:
-        st.error(f"Error loading data: {e}")
         return None
+
+# ... (omitted)
+
+    with c2:
+        st.markdown("#### Distribución por Delito/Categoría")
+        
+        # Spacer to align with the radio button on the left column
+        st.markdown("<div style='height: 48px;'></div>", unsafe_allow_html=True)
+        
+        if not df_filtered.empty:
+            # Fix SettingWithCopyWarning by operating on a copy
+            df_pie_input = df_filtered.copy()
+            
+            # Logic: If too many crime types selected (>10), group by Category to avoid clutter
+            unique_crimes = df_pie_input['codigo_delito_snic_nombre'].nunique()
+            
+            if unique_crimes > 10:
+                # Reverse map to get categories (already defined above loop, but safe to use)
+                df_pie_input['categoria_temp'] = df_pie_input['codigo_delito_snic_nombre'].map(crime_to_category).fillna("Otros")
+                
+                df_pie = df_pie_input.groupby('categoria_temp')['cantidad_hechos'].sum().reset_index()
+                pie_names = 'categoria_temp'
+                custom_data = ['categoria_temp'] # No desc available for cat
+                hover_temp = "<b>%{label}</b><br>Hechos: %{value}"
+            else:
+                df_pie = df_pie_input.groupby(['codigo_delito_snic_nombre', 'descripcion_delito'])['cantidad_hechos'].sum().reset_index()
+                pie_names = 'codigo_delito_snic_nombre'
+                custom_data = ['descripcion_delito']
+                hover_temp = "<b>%{label}</b><br>Hechos: %{value}<br><i>%{customdata[0]}</i>"
+            
+            fig_pie = px.pie(
+                df_pie, 
+                values='cantidad_hechos', 
+                names=pie_names,
+                custom_data=custom_data,
+                hole=0.4,
+                color_discrete_sequence=px.colors.qualitative.Pastel
+            )
+            fig_pie.update_traces(
+                textposition='inside', 
+                textinfo='percent+label',
+                hovertemplate=hover_temp
+            )
+            fig_pie.update_layout(showlegend=False, margin=dict(l=0, r=0, t=30, b=0))
+            # Fix use_container_width warning
+            st.plotly_chart(fig_pie, use_container_width=True) 
+            
+            if unique_crimes > 10:
+                st.caption("ℹ️ Se agruparon los delitos por categoría debido al volumen de datos.")
 
 @st.cache_data
 def load_centroids():
@@ -523,30 +570,6 @@ def main():
 
     if df is None:
         st.error("No se encontraron datos. Por favor, ejecute el pipeline ETL primero.")
-        
-        # --- DEBUG INFO FOR DEPLOYMENT ---
-        st.warning("⚠️ Modo Debug Activado")
-        st.write(f"📂 CWD: {os.getcwd()}")
-        st.write(f"📍 Script Path: {__file__}")
-        st.write(f"🎯 Calculated Data Path: {DATA_PATH}")
-        
-        st.markdown("### Explorador de Archivos (Root)")
-        try:
-            st.write(os.listdir(PROJECT_ROOT))
-        except Exception as e:
-            st.write(f"Error listing root: {e}")
-            
-        st.markdown("### Explorador de Data/Final")
-        data_final_path = os.path.dirname(DATA_PATH)
-        try:
-            if os.path.exists(data_final_path):
-                st.write(os.listdir(data_final_path))
-            else:
-                st.write(f"Directory not found: {data_final_path}")
-        except Exception as e:
-            st.write(f"Error: {e}")
-        # ---------------------------------
-        
         return
 
     # --- Sidebar Filters ---
