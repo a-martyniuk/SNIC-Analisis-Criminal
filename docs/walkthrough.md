@@ -1,102 +1,83 @@
-# Guía del Proyecto de Análisis SNIC
+# Documentación del Proyecto: Panel de Análisis Criminal SNIC
 
-Este documento registra los pasos realizados para configurar el proyecto de Análisis Criminal SNIC e implementar el pipeline ETL inicial.
+Este documento detalla la arquitectura, implementación y características del sistema de Análisis Criminal SNIC. El proyecto integra un pipeline ETL robusto, análisis de datos avanzado y un dashboard interactivo de alto rendimiento para la visualización de estadísticas de seguridad en Argentina.
 
-## 1. Inicialización del Proyecto
-- Directorio de proyecto creado: `d:\Projects\SNIC-Analisis-Criminal`
-- Entorno Python y repositorio Git inicializados.
-- Estructura de directorios creada:
-    - `src/`: Código fuente para ETL
-    - `data/`: Almacenamiento de datos (raw, processed, final)
-    - `notebooks/`: Notebooks de análisis
+## 1. Arquitectura del Proyecto
 
-## 2. Implementación del Pipeline ETL
-Implementamos un pipeline ETL (Extracción, Transformación, Carga) robusto en `src/`.
+El sistema está diseñado modularmente para asegurar escalabilidad y mantenibilidad:
 
-### Extracción (`src/extract.py`)
-- **Función**: Descarga datos reales del SNIC desde `cloud-snic.minseg.gob.ar`.
-- **Estado**: listo para producción. Utiliza el enlace directo CSV para datos departamentales.
+-   **`src/`**: Núcleo del procesamiento (ETL y Dashboard).
+    -   `extract.py`, `transform.py`, `load.py`: Componentes del pipeline de datos.
+    -   `model.py`: Motor de Machine Learning para predicciones.
+    -   `app.py`: Aplicación Web interactiva (Streamlit).
+-   **`data/`**: Gestión de datos en capas (raw, processed, final).
+-   **`notebooks/`**: Análisis exploratorio y prototipeo.
+-   **Docker**: Contenerización completa para despliegue agnóstico del entorno.
 
-### Transformación (`src/transform.py`)
-- **Función**: Limpia y normaliza los datos CSV crudos.
-- **Lógica Clave**: Maneja codificación `latin-1` y delimitador de punto y coma (`;`).
-- **Pasos**:
-    - Elimina filas con valores clave faltantes.
-    - Convierte tipos (ej. `anio` a int).
-    - Estandariza nombres de columnas.
+## 2. Pipeline ETL (Extraction, Transformation, Load)
 
-### Carga (`src/load.py`)
-- **Función**: Guarda los datos procesados en un formato altamente eficiente.
-- **Salida**: `data/final/snic_analytics.parquet`.
+Se implementó un flujo de datos optimizado para manejar la complejidad de las estadísticas criminales:
 
-### Orquestación del Pipeline (`src/pipeline.py`)
-- Conecta todos los pasos.
-- Comando de ejecución: `python src/pipeline.py`.
+1.  **Extracción (`src/extract.py`)**:
+    -   Conexión directa con fuentes oficiales del SNIC.
+    -   Gestión automática de descargas de datos departamentales y provinciales.
 
-## 3. Configuración de Análisis de Datos
-- **Dependencias**: Se agregaron `matplotlib`, `seaborn`, `jupyter` a `requirements.txt`.
-- **Notebook**: Se creó `notebooks/01_eda.ipynb` para Análisis Exploratorio de Datos.
+2.  **Transformación (`src/transform.py`)**:
+    -   Limpieza y normalización de datasets crudos.
+    -   Estandarización de nombres de provincias y tipos de delitos.
+    -   Manejo de codificaciones complejas (`latin-1`) y formatos CSV variados.
 
-## 4. Cómo Ejecutar
-1. **Instalar Dependencias**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. **Ejecutar Pipeline ETL**:
-   ```bash
-   python src/pipeline.py
-   ```
-3. **Ejecutar Análisis**:
-   ```bash
-   jupyter notebook notebooks/01_eda.ipynb
-   ```
+3.  **Carga (`src/load.py`)**:
+    -   Generación de archivos `.parquet` optimizados para lectura rápida en el dashboard.
 
-## 5. Visualización (Dashboard Interactivo)
-Se implementó un dashboard con Streamlit para la exploración dinámica de datos.
+**Ejecución:**
+```bash
+python src/pipeline.py
+```
 
-### Características
-- **Pestana 1: Resumen General**: KPIs con comparativa interanual (Var %) y gráficos de top provincias.
-- **Limpieza Visual**: Mayor espacio para gráficos y menús.
-- **Referencias Dinámicas**: En el menú lateral, debajo del selector de delitos, se agregó un desplegable **"ℹ️ ¿Qué significa cada delito?"** que explica en lenguaje llano los delitos seleccionados.
-- **Pestana 2: Tendencias**: Gráficos de línea y área para ver la evolución histórica.
-- **Mapa Geográfico**: La pestaña "Detalle Geográfico" ahora muestra un mapa de Argentina con burbujas rojas sobre **OpenStreetMap**, permitiendo ver claramente las divisiones provinciales, rutas y ciudades.
-- **Pestana 4: Datos**: Tabla de datos filtrados con opción de **descarga a CSV**.
+## 3. Dashboard Interactivo (Streamlit)
 
-### Ejecución
+La interfaz de usuario ha sido diseñada con un enfoque en **UX/UI moderno y profesional** ("Midnight Blue Theme"), priorizando la claridad de los datos y la toma de decisiones.
+
+### Características Principales
+
+*   **🌎 Resumen General**:
+    *   **KPIs de Alto Impacto**: Tarjetas con métricas clave (Total Hechos, Tasa c/100k) y comparativas interanuales automáticas.
+    *   **Insights Inteligentes**: Detección automática de patrones (delito más frecuente, provincia con mayor aumento/descenso).
+    *   **Filtros Jerárquicos**: Navegación fluida por Categoría -> Tipo de Delito -> Provincia -> Departamento.
+
+*   **🔎 Detalle Geográfico (Mapa Coroplético)**:
+    *   **Visualización Profesional**: Mapa interactivo basado en geometrías oficiales (GeoJSON/GeoRef).
+    *   **Métricas Duales**: Selector dinámico para alternar entre **Tasa cada 100k habitantes** (intensidad real) y **Cantidad Total** (volumen).
+    *   **Estilo Dark Matter**: Integración estética perfecta con el tema oscuro de la aplicación.
+
+*   **⚔️ Comparador de Entidades**:
+    *   **Modo Versus**: Comparación directa "Side-by-Side" entre dos provincias o jurisdicciones.
+    *   **Normalización Demográfica**: Ajuste automático por población (Censo 2022) para comparaciones justas.
+    *   **Gráficos Evolutivos**: Análisis de tendencias históricas comparadas.
+
+*   **🔮 Modelo Predictivo**:
+    *   **Forecasting en Tiempo Real**: Proyección de tendencias criminales futuras mediante modelos de regresión.
+    *   **Interactividad**: Ajuste de horizonte temporal de predicción.
+
+*   **📈 Tendencias y Datos**:
+    *   Gráficos de área y líneas para evolución histórica.
+    *   Tabla de datos crudos con capacidad de exportación a CSV.
+
+### Ejecución Local
 ```bash
 streamlit run src/app.py
 ```
 
-## 6. Despliegue con Docker
-Se han creado los archivos de configuración para ejecutar la aplicación en contenedores.
+## 4. Despliegue y CI/CD
 
-### Requisitos
-- Docker y Docker Compose instalados.
+El proyecto está listo para entornos de producción modernos:
 
-### Ejecución
-1. **Construir y levantar**:
-   ```bash
-   docker-compose up --build
-   ```
-2. **Acceder**:
-   Navegar a `http://localhost:8501`.
+*   **Docker**: `Dockerfile` y `docker-compose.yml` configurados para un despliegue en un solo comando (`docker-compose up --build`).
+*   **GitHub Actions**: Pipeline de CI configurado para ejecutar tests unitarios y verificar la construcción de la imagen Docker en cada commit, asegurando la integridad del código.
 
-## 7. Automatización CI/CD
-Se configuró un flujo de trabajo en GitHub Actions (`.github/workflows/ci.yml`) que:
-1. Ejecuta pruebas unitarias (`pytest`).
-2. Verifica que la imagen Docker se construya correctamente.
+## 5. Próximos Pasos Sugeridos
 
-Esto asegura la calidad del código y la desplegabilidad en cada push a `main`.
-
-
-## 8. Modelo Predictivo (Machine Learning)
-Se incorporó un modelo de **Regresión Lineal** (`src/model.py`) para proyectar tendencias futuras.
-
-### Características
-- **Entrenamiento On-the-fly**: El modelo se entrena en tiempo real con los datos filtrados por el usuario.
-- **Visualización**: Muestra la línea histórica y la proyección futura (punteada) en una nueva pestaña **"🔮 Predicciones"**.
-- **Interactividad**: Slider para elegir cuántos años proyectar hacia el futuro.
-
-## Próximos Pasos
-- Refinar el modelo (considerar estacionalidad si hubiera datos mensuales).
-- Agregar más variables predictoras.
+*   Incorporación de datos a nivel municipal para mayor granularidad.
+*   Implementación de modelos de ML más complejos (ej. Prophet, LSTM) para capturar estacionalidad mensual.
+*   Panel de autenticación de usuarios para gestión de accesos.
