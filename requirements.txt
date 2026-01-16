@@ -1,0 +1,12 @@
+pandas
+google-cloud-bigquery
+google-cloud-storage
+db-dtypes
+pyarrow
+openpyxl
+requests
+pytest
+matplotlib
+seaborn
+jupyter
+ipykernel
