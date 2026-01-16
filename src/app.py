@@ -419,26 +419,21 @@ def main():
             color: #E2E8F0; /* Slate 200 - Softer white */
         }
         
-        /* HEADERS - Sticky & Centered */
+        /* HEADERS - Natural & Centered */
         h1 {
-            position: sticky; 
-            top: 0;
-            z-index: 999;
-            background-color: rgba(2, 6, 23, 0.95);
-            backdrop-filter: blur(10px);
             text-align: center;
-            padding: 2.5rem 0 1rem 0; /* Increased top padding significantly */
-            margin: 0 0 2rem 0; /* Increased bottom margin */
-            border-bottom: 1px solid #1E293B;
             font-weight: 700 !important;
-            font-size: 2.2rem !important;
+            font-size: 2.5rem !important;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #1E293B;
             letter-spacing: -0.01em;
-            box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.5); /* Added shadow for depth */
+            /* Nuance: No fixed/sticky position */
         }
         
-        /* Reset main container padding */
+        /* Reset main container to default comfortable spacing */
         .block-container {
-            padding-top: 1rem;
+            padding-top: 3rem;
             padding-bottom: 3rem;
             max-width: 100%;
         }
