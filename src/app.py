@@ -920,7 +920,7 @@ def main():
                 color='codigo_delito_snic_nombre',
                 custom_data=['descripcion_delito']
             )
-        st.plotly_chart(fig_area, use_container_width=True)
+            st.plotly_chart(fig_area, use_container_width=True)
 
     # --- TAB 3: Detalle Geográfico (Mapa Coroplético) ---
     with tab3:
