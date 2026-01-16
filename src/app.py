@@ -396,7 +396,7 @@ def main():
     
     with st.expander("ℹ️ Fuente de Datos y Metodología"):
         st.markdown("""
-        **Fuente Oficial:** [Sistema Nacional de Información Criminal (SNIC)](https://www.argentina.gob.ar/seguridad/estadisticas/snic).
+        **Fuente Oficial:** [Dirección Nacional de Estadística Criminal](https://www.argentina.gob.ar/seguridad/estadisticas).
         
         **Origen:** Ministerio de Seguridad de la Nación Argentina.
         
