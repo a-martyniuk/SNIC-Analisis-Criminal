@@ -7,10 +7,16 @@ from model import prepare_time_series, train_and_predict
 
 # Configuration
 ST_PAGE_TITLE = "Panel de Análisis Criminal SNIC"
-DATA_PATH = "data/final/snic_analytics.parquet"
-DATA_PATH = "data/final/snic_analytics.parquet"
-FALLBACK_DATA_PATH = "data/processed/snic_clean.csv"
-CENTROIDS_PATH = "data/provincias_centroids.csv"
+
+# Robust Path Handling
+# Get the directory where app.py is located (src/)
+SRC_DIR = os.path.dirname(os.path.abspath(__file__))
+# Get the project root (one level up)
+PROJECT_ROOT = os.path.dirname(SRC_DIR)
+
+DATA_PATH = os.path.join(PROJECT_ROOT, "data", "final", "snic_analytics.parquet")
+FALLBACK_DATA_PATH = os.path.join(PROJECT_ROOT, "data", "processed", "snic_clean.csv")
+CENTROIDS_PATH = os.path.join(PROJECT_ROOT, "data", "provincias_centroids.csv")
 
 st.set_page_config(page_title=ST_PAGE_TITLE, layout="wide")
 
