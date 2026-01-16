@@ -516,6 +516,30 @@ def main():
 
     if df is None:
         st.error("No se encontraron datos. Por favor, ejecute el pipeline ETL primero.")
+        
+        # --- DEBUG INFO FOR DEPLOYMENT ---
+        st.warning("⚠️ Modo Debug Activado")
+        st.write(f"📂 CWD: {os.getcwd()}")
+        st.write(f"📍 Script Path: {__file__}")
+        st.write(f"🎯 Calculated Data Path: {DATA_PATH}")
+        
+        st.markdown("### Explorador de Archivos (Root)")
+        try:
+            st.write(os.listdir(PROJECT_ROOT))
+        except Exception as e:
+            st.write(f"Error listing root: {e}")
+            
+        st.markdown("### Explorador de Data/Final")
+        data_final_path = os.path.dirname(DATA_PATH)
+        try:
+            if os.path.exists(data_final_path):
+                st.write(os.listdir(data_final_path))
+            else:
+                st.write(f"Directory not found: {data_final_path}")
+        except Exception as e:
+            st.write(f"Error: {e}")
+        # ---------------------------------
+        
         return
 
     # --- Sidebar Filters ---
