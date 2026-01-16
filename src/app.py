@@ -298,16 +298,23 @@ def load_geojson():
         st.error(f"Error cargando mapa: {e}")
         return None
 
-@st.cache_data
+# Removed cache for debugging
 def load_data():
     """Loads data from Parquet or CSV fallback."""
     df = None
-    if os.path.exists(DATA_PATH):
-        df = pd.read_parquet(DATA_PATH)
-    elif os.path.exists(FALLBACK_DATA_PATH):
-        df = pd.read_csv(FALLBACK_DATA_PATH)
-    
-    return df
+    try:
+        if os.path.exists(DATA_PATH):
+            df = pd.read_parquet(DATA_PATH)
+            return df
+        elif os.path.exists(FALLBACK_DATA_PATH):
+            df = pd.read_csv(FALLBACK_DATA_PATH)
+            return df
+        else:
+            st.error(f"File not found at {DATA_PATH} or {FALLBACK_DATA_PATH}")
+            return None
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
+        return None
 
 @st.cache_data
 def load_centroids():
