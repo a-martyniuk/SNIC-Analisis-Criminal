@@ -82,6 +82,6 @@ Consulta el archivo [DEPLOY.md](DEPLOY.md) para ver guías detalladas sobre cóm
 
 ## 📄 Créditos y Datos
 
-*   **Fuente de Datos:** [Dirección Nacional de Estadística Criminal](https://www.argentina.gob.ar/seguridad/estadisticas).
+*   **Fuente de Datos:** [Dirección Nacional de Estadística Criminal - Bases de Datos](https://www.argentina.gob.ar/seguridad/estadisticascriminales/bases-de-datos).
 *   **Procesamiento Geográfico:** APIs de GeoRef e INDEC (Censo 2022).
 *   **Desarrollado por:** Alexis Martyniuk.

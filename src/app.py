@@ -396,7 +396,7 @@ def main():
     
     with st.expander("ℹ️ Fuente de Datos y Metodología"):
         st.markdown("""
-        **Fuente Oficial:** [Dirección Nacional de Estadística Criminal](https://www.argentina.gob.ar/seguridad/estadisticas).
+        **Fuente Oficial:** [Dirección Nacional de Estadística Criminal - Bases de Datos](https://www.argentina.gob.ar/seguridad/estadisticascriminales/bases-de-datos).
         
         **Origen:** Ministerio de Seguridad de la Nación Argentina.
         
