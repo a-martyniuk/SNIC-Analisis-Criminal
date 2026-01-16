@@ -419,12 +419,30 @@ def main():
             color: #E2E8F0; /* Slate 200 - Softer white */
         }
         
-        /* HEADERS - Hierarchy */
+        /* HEADERS - Sticky & Centered */
         h1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(2, 6, 23, 0.95); /* Semi-transparent background */
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            text-align: center;
+            padding: 1rem 0;
+            margin: 0;
+            border-bottom: 1px solid #1E293B;
             font-weight: 700 !important;
-            font-size: 2.2rem !important; /* Reduced from 3rem */
-            padding-bottom: 0.25rem;
+            font-size: 2rem !important;
             letter-spacing: -0.01em;
+            width: 100%;
+        }
+        
+        /* Adjust main container to prevent H1 overlap */
+        .block-container {
+            padding-top: 6rem !important; /* Push content down */
+            padding-bottom: 3rem;
+            max-width: 100%; /* Use full width */
         }
         
         /* New Gradient Text Class */
@@ -507,43 +525,50 @@ def main():
         }
         
         /* TABS - High Visibility */
-        /* TABS - Clean & Professional */
+        /* TABS - Full Width & Distributed */
         .stTabs [data-baseweb="tab-list"] {
-            gap: 24px;
-            border-bottom: 1px solid #1E293B;
+            gap: 8px; /* Small gap between tabs */
+            border-bottom: none; /* Removed bottom line for card style */
             margin-bottom: 1.5rem;
-            padding-bottom: 0px;
+            display: flex;
+            width: 100%;
+            justify-content: space-between; /* Distribute evenly */
         }
         
         .stTabs [data-baseweb="tab"] {
-            height: 48px; /* Reduced from 60px */
-            background-color: transparent;
-            border: none;
+            flex-grow: 1; /* Make each tab take equal width */
+            justify-content: center; /* Center text */
+            height: 50px;
+            background-color: #0F172A; /* Card background */
+            border: 1px solid #1E293B; /* Border for definition */
+            border-radius: 8px; /* Rounded corners */
             color: #64748B;
-            padding: 0 4px;
-            margin-bottom: -1px; /* Align with border */
+            padding: 0;
+            margin: 0;
             transition: all 0.2s ease;
         }
         
         /* Text inside tabs */
         .stTabs [data-baseweb="tab"] div, .stTabs [data-baseweb="tab"] p {
-             font-size: 1rem !important; /* Normalized from 1.5rem */
-             font-weight: 500 !important;
+             font-size: 1rem !important;
+             font-weight: 600 !important;
         }
         
         .stTabs [data-baseweb="tab"]:hover {
             color: #CBD5E1;
+            border-color: #6366F1;
+            background-color: #1E293B;
         }
         
         .stTabs [data-baseweb="tab"][aria-selected="true"] {
-            color: #6366F1 !important; /* Indigo text */
-            background-color: transparent;
-            border-bottom: 2px solid #6366F1; /* Clean underline */
+            color: #FFFFFF !important;
+            background-color: #6366F1; /* Active accent background */
+            border: 1px solid #6366F1;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); /* Glow effect */
         }
         
-        /* Specific target to override the previous "Bright White" active state */
         .stTabs [data-baseweb="tab"][aria-selected="true"] div {
-            font-weight: 600 !important;
+            font-weight: 700 !important;
         }
 
         /* Sidebar Cleanup */
