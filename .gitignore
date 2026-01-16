@@ -30,9 +30,12 @@ ENV/
 
 # Data
 data/
+!data/final/
+!data/provincias_centroids.csv
 *.csv
 *.xlsx
 *.parquet
+!data/final/*.parquet
 
 # VS Code
 .vscode/
