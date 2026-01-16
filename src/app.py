@@ -421,9 +421,10 @@ def main():
         
         /* HEADERS - Hierarchy */
         h1 {
-            font-weight: 800 !important;
-            font-size: 3rem !important;
-            padding-bottom: 0.5rem;
+            font-weight: 700 !important;
+            font-size: 2.2rem !important; /* Reduced from 3rem */
+            padding-bottom: 0.25rem;
+            letter-spacing: -0.01em;
         }
         
         /* New Gradient Text Class */
@@ -436,57 +437,66 @@ def main():
         h2 {
             color: #F1F5F9 !important;
             font-weight: 600 !important;
-            font-size: 1.8rem !important;
-            margin-top: 2rem !important;
-            margin-bottom: 1rem !important;
+            font-size: 1.5rem !important; /* Reduced from 1.8rem */
+            margin-top: 1.5rem !important;
+            margin-bottom: 0.75rem !important;
         }
         
         h3 {
             color: #CBD5E1 !important;
             font-weight: 500 !important;
-            font-size: 1.25rem !important;
-            margin-bottom: 1rem !important;
+            font-size: 1.15rem !important;
+            margin-bottom: 0.75rem !important;
         }
         
-        /* METRIC CARDS - Fluid & Aligned */
+        /* METRIC CARDS - Balanced */
         [data-testid="stMetric"] {
-            background-color: #0F172A; /* Slate 900 */
-            padding: 24px;
+            background-color: #0F172A;
+            padding: 20px;
             border-radius: 12px;
             border: 1px solid #1E293B;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             text-align: center;
-            height: 180px; /* Fixed height for perfect alignment */
+            height: 140px; /* Reduced from 180px */
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Vertical center */
-            align-items: center; /* Horizontal center */
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        [data-testid="stMetric"]:hover {
+            transform: translateY(-2px);
+            border-color: #6366F1; /* Indigo accent on hover */
         }
         
         /* Label (Top) */
         [data-testid="stMetricLabel"] {
             color: #94A3B8 !important;
-            font-size: 0.95rem !important; /* Slightly larger */
-            font-weight: 600; /* Bolder */
+            font-size: 0.85rem !important;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: auto; /* Push to top */
+            margin-bottom: auto; 
         }
         
         /* Value (Middle) */
         [data-testid="stMetricValue"] {
             color: #F8FAFC !important;
-            font-size: 2.8rem !important; /* Much larger */
-            font-weight: 800; /* Extra Bold */
-            padding: 8px 0;
-            margin: auto 0; /* Center vertically */
+            font-size: 2rem !important; /* Reduced from 2.8rem */
+            font-weight: 700;
+            margin: auto 0;
         }
         
         /* Delta (Bottom) */
         [data-testid="stMetricDelta"] {
-            font-size: 0.9rem !important;
-            font-weight: 700;
-            margin-top: auto; /* Push to bottom */
+            font-size: 0.85rem !important;
+            font-weight: 600;
+            margin-top: auto; 
+            background: rgba(15, 23, 42, 0.5);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
         }    
         
         /* COMPONENTS */
@@ -497,38 +507,56 @@ def main():
         }
         
         /* TABS - High Visibility */
+        /* TABS - Clean & Professional */
         .stTabs [data-baseweb="tab-list"] {
-            gap: 16px;
-            border-bottom: 2px solid #1E293B;
-            margin-bottom: 2rem;
+            gap: 24px;
+            border-bottom: 1px solid #1E293B;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0px;
         }
         
         .stTabs [data-baseweb="tab"] {
-            height: 60px;
-            font-size: 1.5rem !important; /* Force Larger text */
-            font-weight: 700 !important;  /* Force Extra Bold */
-            color: #64748B;
+            height: 48px; /* Reduced from 60px */
             background-color: transparent;
-            border-radius: 8px 8px 0 0;
-            padding: 0 24px;
-            transition: all 0.3s ease;
+            border: none;
+            color: #64748B;
+            padding: 0 4px;
+            margin-bottom: -1px; /* Align with border */
+            transition: all 0.2s ease;
         }
         
-        /* Specific target for text inside tabs to better override Streamlit defaults */
+        /* Text inside tabs */
         .stTabs [data-baseweb="tab"] div, .stTabs [data-baseweb="tab"] p {
-             font-size: 1.5rem !important;
-             font-weight: 700 !important;
+             font-size: 1rem !important; /* Normalized from 1.5rem */
+             font-weight: 500 !important;
         }
         
         .stTabs [data-baseweb="tab"]:hover {
             color: #CBD5E1;
-            background-color: #0F172A; /* Slight background on hover */
         }
         
         .stTabs [data-baseweb="tab"][aria-selected="true"] {
-            color: #FFFFFF !important; /* Bright White */
-            background-color: #1E293B; /* Active Background tab style */
-            border-bottom: 4px solid #6366F1; /* Thick Accent Border */
+            color: #6366F1 !important; /* Indigo text */
+            background-color: transparent;
+            border-bottom: 2px solid #6366F1; /* Clean underline */
+        }
+        
+        /* Specific target to override the previous "Bright White" active state */
+        .stTabs [data-baseweb="tab"][aria-selected="true"] div {
+            font-weight: 600 !important;
+        }
+
+        /* Sidebar Cleanup */
+        [data-testid="stSidebar"] {
+            background-color: #020617;
+            border-right: 1px solid #1E293B;
+        }
+        
+        /* Container spacing */
+        .block-container {
+            padding-top: 2rem;
+            padding-bottom: 3rem;
+            max-width: 1200px;
         }
 
         /* Sidebar Cleanup */
