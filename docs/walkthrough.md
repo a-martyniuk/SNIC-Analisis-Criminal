@@ -50,3 +50,53 @@ Implementamos un pipeline ETL (Extracción, Transformación, Carga) robusto en `
    ```bash
    jupyter notebook notebooks/01_eda.ipynb
    ```
+
+## 5. Visualización (Dashboard Interactivo)
+Se implementó un dashboard con Streamlit para la exploración dinámica de datos.
+
+### Características
+- **Pestana 1: Resumen General**: KPIs con comparativa interanual (Var %) y gráficos de top provincias.
+- **Limpieza Visual**: Mayor espacio para gráficos y menús.
+- **Referencias Dinámicas**: En el menú lateral, debajo del selector de delitos, se agregó un desplegable **"ℹ️ ¿Qué significa cada delito?"** que explica en lenguaje llano los delitos seleccionados.
+- **Pestana 2: Tendencias**: Gráficos de línea y área para ver la evolución histórica.
+- **Mapa Geográfico**: La pestaña "Detalle Geográfico" ahora muestra un mapa de Argentina con burbujas rojas sobre **OpenStreetMap**, permitiendo ver claramente las divisiones provinciales, rutas y ciudades.
+- **Pestana 4: Datos**: Tabla de datos filtrados con opción de **descarga a CSV**.
+
+### Ejecución
+```bash
+streamlit run src/app.py
+```
+
+## 6. Despliegue con Docker
+Se han creado los archivos de configuración para ejecutar la aplicación en contenedores.
+
+### Requisitos
+- Docker y Docker Compose instalados.
+
+### Ejecución
+1. **Construir y levantar**:
+   ```bash
+   docker-compose up --build
+   ```
+2. **Acceder**:
+   Navegar a `http://localhost:8501`.
+
+## 7. Automatización CI/CD
+Se configuró un flujo de trabajo en GitHub Actions (`.github/workflows/ci.yml`) que:
+1. Ejecuta pruebas unitarias (`pytest`).
+2. Verifica que la imagen Docker se construya correctamente.
+
+Esto asegura la calidad del código y la desplegabilidad en cada push a `main`.
+
+
+## 8. Modelo Predictivo (Machine Learning)
+Se incorporó un modelo de **Regresión Lineal** (`src/model.py`) para proyectar tendencias futuras.
+
+### Características
+- **Entrenamiento On-the-fly**: El modelo se entrena en tiempo real con los datos filtrados por el usuario.
+- **Visualización**: Muestra la línea histórica y la proyección futura (punteada) en una nueva pestaña **"🔮 Predicciones"**.
+- **Interactividad**: Slider para elegir cuántos años proyectar hacia el futuro.
+
+## Próximos Pasos
+- Refinar el modelo (considerar estacionalidad si hubiera datos mensuales).
+- Agregar más variables predictoras.

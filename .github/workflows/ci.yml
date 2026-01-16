@@ -27,3 +27,6 @@ jobs:
     - name: Run tests with pytest
       run: |
         pytest tests/
+    
+    - name: Build Docker image
+      run: docker build . --file Dockerfile --tag snic-app:latest
