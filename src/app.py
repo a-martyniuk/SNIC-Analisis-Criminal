@@ -421,28 +421,25 @@ def main():
         
         /* HEADERS - Sticky & Centered */
         h1 {
-            position: fixed;
+            position: sticky; /*Changed from fixed to sticky */
             top: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(2, 6, 23, 0.95); /* Semi-transparent background */
+            z-index: 999;
+            background-color: rgba(2, 6, 23, 0.95);
             backdrop-filter: blur(10px);
-            z-index: 9999;
             text-align: center;
             padding: 1rem 0;
-            margin: 0;
+            margin: 0 0 1.5rem 0; /* Add bottom margin */
             border-bottom: 1px solid #1E293B;
             font-weight: 700 !important;
             font-size: 2rem !important;
             letter-spacing: -0.01em;
-            width: 100%;
         }
         
-        /* Adjust main container to prevent H1 overlap */
+        /* Reset main container padding (no need to compensate for fixed) */
         .block-container {
-            padding-top: 6rem !important; /* Push content down */
+            padding-top: 2rem;
             padding-bottom: 3rem;
-            max-width: 100%; /* Use full width */
+            max-width: 100%;
         }
         
         /* New Gradient Text Class */
