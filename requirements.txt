@@ -13,3 +13,4 @@ ipykernel
 streamlit
 plotly
 scikit-learn
+protobuf<=3.20.3
